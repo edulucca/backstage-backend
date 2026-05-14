@@ -1,0 +1,49 @@
+# catalog-info.yaml — repo myorg/backstage-backend
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: db-backstage-core
+  title: Banco do Backstage (PostgreSQL)
+  description: Banco de dados que armazena o catálogo e configurações da plataforma.
+  tags: [database, postgresql]
+  annotations:
+    github.com/project-slug: myorg/backstage-backend
+spec:
+  type: database
+  owner: group:squad-devex
+  system: devex-platform
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: bucket-techdocs-storage
+  title: TechDocs Storage (S3)
+  description: Bucket onde os arquivos HTML/CSS da documentação técnica são armazenados.
+  tags: [storage, aws-s3, docs]
+  annotations:
+    github.com/project-slug: myorg/backstage-backend
+spec:
+  type: s3-bucket
+  owner: group:squad-devex
+  system: devex-platform
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: backstage-backend
+  title: Developer Portal Backend
+  description: O motor de catálogo, techdocs e scaffolder em Node.js.
+  tags: [nodejs, backend]
+  annotations:
+    github.com/project-slug: myorg/backstage-backend
+spec:
+  type: service
+  lifecycle: production
+  owner: group:squad-devex
+  system: devex-platform
+  dependsOn:
+    - resource:default/db-backstage-core
+    - resource:default/bucket-techdocs-storage
